@@ -6,8 +6,8 @@ echo "Checking whether the environment meets the requirements ..."
 source $CURDIR/env.sh
 echo "Check succeed."
 
-repo=("grpc" "kitex-pb" "kitex-mux" "rpcx" "arpc" "arpc-nbio" "kitex-grpc")
-ports=(8000 8001 8002 8003 8004 8005 8006)
+repo=("grpc" "kitex-pb" "kitex-mux" "rpcx" "kitex-grpc")
+ports=(8000 8001 8002 8003 8006)
 
 echo "Building protobuf services by exec build_pb.sh..."
 source $CURDIR/build_pb.sh
