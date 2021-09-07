@@ -53,9 +53,7 @@ func (s *EchoImpl) Echo(ctx context.Context, req *echo.Request) (*echo.Response,
 
 func main() {
 	go func() {
-		if err := http.ListenAndServe(":18006", nil); err != nil {
-			log.Printf("Start pprof server failed, err: %s", err.Error())
-		}
+		log.Println(http.ListenAndServe("localhost:18006", nil))
 	}()
 
 	svr := echosvr.NewServer(
