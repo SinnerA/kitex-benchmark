@@ -20,13 +20,14 @@ import (
 	"context"
 	"log"
 	"net"
-
-	"github.com/cloudwego/kitex/server"
+	"net/http"
+	_ "net/http/pprof"
 
 	"github.com/cloudwego/kitex-benchmark/codec/protobuf/kitex_gen/echo"
 	echosvr "github.com/cloudwego/kitex-benchmark/codec/protobuf/kitex_gen/echo/echo"
 	"github.com/cloudwego/kitex-benchmark/perf"
 	"github.com/cloudwego/kitex-benchmark/runner"
+	"github.com/cloudwego/kitex/server"
 )
 
 const port = 8006
@@ -51,6 +52,12 @@ func (s *EchoImpl) Echo(ctx context.Context, req *echo.Request) (*echo.Response,
 }
 
 func main() {
+	go func() {
+		if err := http.ListenAndServe(":18006", nil); err != nil {
+			log.Printf("Start pprof server failed, err: %s", err.Error())
+		}
+	}()
+
 	svr := echosvr.NewServer(
 		new(EchoImpl),
 		server.WithServiceAddr(&net.TCPAddr{IP: net.IPv4zero, Port: port}),
