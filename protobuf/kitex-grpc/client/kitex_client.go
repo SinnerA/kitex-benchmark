@@ -21,13 +21,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cloudwego/kitex/client"
-	"github.com/cloudwego/kitex/pkg/connpool"
-	"github.com/cloudwego/kitex/transport"
-
 	"github.com/cloudwego/kitex-benchmark/codec/protobuf/kitex_gen/echo"
 	echosvr "github.com/cloudwego/kitex-benchmark/codec/protobuf/kitex_gen/echo/echo"
 	"github.com/cloudwego/kitex-benchmark/runner"
+	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/pkg/connpool"
 )
 
 func NewKClient(opt *runner.Options) runner.Client {
@@ -36,7 +34,6 @@ func NewKClient(opt *runner.Options) runner.Client {
 			client.WithHostPorts(opt.Address),
 			client.WithLongConnection(
 				connpool.IdleConfig{MaxIdlePerAddress: 1000, MaxIdleGlobal: 1000, MaxIdleTimeout: time.Minute}),
-			client.WithTransportProtocol(transport.GRPC),
 		),
 		reqPool: &sync.Pool{
 			New: func() interface{} {
